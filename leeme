@@ -1,0 +1,6 @@
+1.- Crear proyecto en IntelliJ idea
+2.- Añadir
+	- Spring Boot DevTools
+	- Thymeleaf
+	- Spring Data JPA
+	- MySQL Driver
