@@ -4,3 +4,18 @@
 	- Thymeleaf
 	- Spring Data JPA
 	- MySQL Driver
+	- Spring Boot starter web
+3.- Añadir en clase principal:
+	@ComponentScan({"rutaControladores"})
+	@EntityScan("com.example.jpa.model")
+	@EnableJpaRepositories("com.example.jpa.repository")
+
+4.- En la clase controlador:
+	@RestController
+	@RequestMapping("/test")
+	
+	@GetMapping("/test1")
+    public ResponseEntity test1(){
+		return ResponseEntity.ok();
+    }
+	
