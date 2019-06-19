@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -52,5 +51,53 @@ public class TestJPAController {
     @GetMapping("/clientByCity")
     public ResponseEntity client(@RequestBody City city){
         return ResponseEntity.ok(clientRepository.findAllByCityId(city.getId()));
+    }
+
+    @GetMapping("/testAddCity")
+    public ResponseEntity add(){
+        Region region = new Region();
+        region.setName("Region nueva");
+
+        regionRepository.save(region);
+
+        City city = new City();
+
+        city.setName("Ciudad nueva");
+        city.setRegion(region);
+
+        return ResponseEntity.ok(cityRepository.save(city));
+    }
+
+    @GetMapping("/testAddCity2")
+    public ResponseEntity add2(){
+        Optional<Region> regionOptional = regionRepository.findById(3);
+
+        if(regionOptional.isPresent()){
+            Region region = regionOptional.get();
+
+            City city = new City();
+
+            city.setName("Ciudad nueva 2");
+            city.setRegion(region);
+
+            return ResponseEntity.ok(cityRepository.save(city));
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/updateRegion")
+    public ResponseEntity update(){
+        Optional<Region> regionOptional = regionRepository.findById(8);
+
+        if(regionOptional.isPresent()){
+            Region region = regionOptional.get();
+
+            region.setName("Cambio de region");
+
+            return ResponseEntity.ok(regionRepository.save(region));
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 }
